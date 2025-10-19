@@ -7,6 +7,7 @@ Integration tests
 from io import BytesIO
 import pytest
 
+@pytest.fixture
 def test_successful_prediction(client):
     """Test the successful image upload and prediction."""
     # Create a mock image file with minimal valid content
