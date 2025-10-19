@@ -29,11 +29,4 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest custom_tests.py \
-          conftest.py \
-          test_acceptance_edge_cases.py \ 
-          test_acceptance_happy.py \
-          test_acceptance_sad.py \
-          test_integration_happy.py \
-          test_integration_sad.py \
-          test_model.py
+          pytest custom_tests.py conftest.py test_acceptance_edge_cases.py test_acceptance_happy.py test_acceptance_sad.py test_integration_happy.py test_integration_sad.py test_model.py
