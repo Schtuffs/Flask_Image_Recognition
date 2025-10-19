@@ -28,4 +28,4 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest test_model.py  # Run your tests
+          pytest test_model.py

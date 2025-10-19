@@ -1,3 +1,7 @@
+"""
+Acceptance tests
+"""
+
 # test_acceptance_sad.py
 
 import pytest

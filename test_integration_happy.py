@@ -1,3 +1,7 @@
+"""
+Integration tests
+"""
+
 # test_integration_happy.py
 
 from io import BytesIO

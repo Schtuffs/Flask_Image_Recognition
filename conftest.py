@@ -1,4 +1,6 @@
-
+"""
+Test module
+"""
 
 import pytest
 from app import app  # This imports the Flask app for testing

@@ -1,3 +1,7 @@
+"""
+Acceptance tests
+"""
+
 # test_acceptance_happy.py
 
 from io import BytesIO

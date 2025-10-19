@@ -1,3 +1,7 @@
+"""
+Acceptance tests
+"""
+
 # test_acceptance_edge_cases.py
 
 from io import BytesIO
