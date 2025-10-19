@@ -4,7 +4,7 @@ Acceptance tests
 
 # test_acceptance_sad.py
 
-def test_acceptance_missing_file(clnt):
+def test_acceptance_missing_file(client):
     """
     Test Case: No File Uploaded
     - Purpose: Validate the application's behavior when no file is provided in the upload request.
@@ -14,7 +14,7 @@ def test_acceptance_missing_file(clnt):
         - Verify that the response includes an appropriate error message.
     """
     # Simulate a POST request with no file data
-    response = clnt.post("/prediction", data={}, content_type="multipart/form-data")
+    response = client.post("/prediction", data={}, content_type="multipart/form-data")
     # Assertions:
     # 1. Ensure the response status code is 200, indicating the request was processed.
     assert response.status_code == 200

@@ -49,5 +49,4 @@ def test_acceptance_valid_image_size_upload(client):
     """
     img_data = BytesIO(b"valid_image_data_of_large_size" * 1000)  # Simulating a specific size
     img_data.name = "large_image.jpg"
-    
     data_check(client, img_data)
