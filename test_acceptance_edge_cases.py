@@ -5,7 +5,8 @@ Acceptance tests
 # test_acceptance_edge_cases.py
 
 from io import BytesIO
-import pytest
+
+from conftest import data_check
 
 # Helper function for concurrent image uploads
 def upload_image(client, img_data):
@@ -21,7 +22,6 @@ def upload_image(client, img_data):
     )
 
 # 1. Edge Case: Uploading a Large Image File
-@pytest.fixture
 def test_edge_case_large_image_upload(client):
     """
     Test uploading a large image to see how the system handles large file sizes.
@@ -31,17 +31,9 @@ def test_edge_case_large_image_upload(client):
     large_img_data = BytesIO(b"large_image_data" * 10**6)  # Simulating a large image
     large_img_data.name = "large_image.jpg"
 
-    response = client.post(
-        "/prediction",
-        data={"file": (large_img_data, large_img_data.name)},
-        content_type="multipart/form-data"
-    )
-
-    # Assert that the system can process large image files
-    assert b"Prediction" in response.data  # Adjust based on actual prediction content
+    data_check(client, large_img_data)
 
 # 2. Edge Case: Uploading an Image with Missing or Incorrect Metadata
-@pytest.fixture
 def test_edge_case_invalid_metadata(client):
     """
     Test uploading an image with missing or incorrect metadata.
@@ -51,17 +43,9 @@ def test_edge_case_invalid_metadata(client):
     img_data = BytesIO(b"image_with_no_metadata")
     img_data.name = "image_no_metadata.jpg"
 
-    response = client.post(
-        "/prediction",
-        data={"file": (img_data, img_data.name)},
-        content_type="multipart/form-data"
-    )
-
-    # Assert that the system processes the image even without metadata
-    assert b"Prediction" in response.data  # Adjust based on actual behavior
+    data_check(client, img_data)
 
 # 3. Edge Case: Uploading an Image with Non-Standard File Extensions
-@pytest.fixture
 def test_edge_case_non_standard_image_extensions(client):
     """
     Test uploading images with non-standard file extensions.
@@ -71,17 +55,9 @@ def test_edge_case_non_standard_image_extensions(client):
     img_data = BytesIO(b"valid_image_data")
     img_data.name = "non_standard_image.webp"  # Non-standard extension
 
-    response = client.post(
-        "/prediction",
-        data={"file": (img_data, img_data.name)},
-        content_type="multipart/form-data"
-    )
-
-    # Ensure the system processes the file despite the non-standard extension
-    assert b"Prediction" in response.data  # Adjust based on actual prediction content
+    data_check(client, img_data)
 
 # 4. Edge Case: Uploading a Sequence of Images for Multi-Step Processing
-@pytest.fixture
 def test_edge_case_sequential_image_uploads(client):
     """
     Test uploading a sequence of images that trigger multi-step processing.
@@ -94,26 +70,10 @@ def test_edge_case_sequential_image_uploads(client):
     img_data2 = BytesIO(b"second_image_data")
     img_data2.name = "second_image.jpg"
 
-    # First upload
-    response1 = client.post(
-        "/prediction",
-        data={"file": (img_data1, img_data1.name)},
-        content_type="multipart/form-data"
-    )
-
-    # Second upload
-    response2 = client.post(
-        "/prediction",
-        data={"file": (img_data2, img_data2.name)},
-        content_type="multipart/form-data"
-    )
-
-    # Ensure that each upload processed correctly
-    assert b"Prediction" in response1.data
-    assert b"Prediction" in response2.data
+    data_check(client, img_data1)
+    data_check(client, img_data2)
 
 # 5. Edge Case: Uploading with Unexpected Headers
-@pytest.fixture
 def test_edge_case_unexpected_headers(client):
     """
     Test uploading an image with unexpected headers.
@@ -135,7 +95,6 @@ def test_edge_case_unexpected_headers(client):
     assert b"Prediction" in response.data
 
 # 6. Edge Case: Uploading an Image with HTTP/2
-@pytest.fixture
 def test_edge_case_upload_over_http2(client):
     """
     Test uploading an image using HTTP/2 protocol.
@@ -145,12 +104,4 @@ def test_edge_case_upload_over_http2(client):
     img_data = BytesIO(b"valid_image_data")
     img_data.name = "http2_image.jpg"
 
-    # Simulate uploading the image using HTTP/2 (client would need to support it)
-    response = client.post(
-        "/prediction",
-        data={"file": (img_data, img_data.name)},
-        content_type="multipart/form-data"
-    )
-
-    # Ensure that the image upload works successfully over HTTP/2
-    assert b"Prediction" in response.data
+    data_check(client, img_data)

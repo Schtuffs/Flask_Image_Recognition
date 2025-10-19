@@ -5,20 +5,8 @@ Acceptance tests
 # test_acceptance_happy.py
 
 from io import BytesIO
-import pytest
+from conftest import data_check
 
-def data_check(client, img_data):
-    """Checks for multiple images"""
-    response = client.post(
-        "/prediction",
-        data={"file": (img_data, img_data.name)},
-        content_type="multipart/form-data"
-    )
-
-    assert response.status_code == 200
-    assert b"Prediction" in response.data
-
-@pytest.fixture
 def test_acceptance_successful_upload(client):
     """
     Test Case: Successful Upload of a Valid Image File
@@ -34,7 +22,6 @@ def test_acceptance_successful_upload(client):
 
     data_check(client, img_data)
 
-@pytest.fixture
 def test_acceptance_valid_large_image(client):
     """
     Test Case: Upload of a Valid Large Image File
@@ -51,7 +38,6 @@ def test_acceptance_valid_large_image(client):
 
     data_check(client, img_data)
 
-@pytest.fixture
 def test_acceptance_valid_image_size_upload(client):
     """
     Test Case: Upload of an Image with a Specific Large Size

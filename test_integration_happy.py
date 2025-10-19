@@ -5,10 +5,9 @@ Integration tests
 # test_integration_happy.py
 
 from io import BytesIO
-import pytest
-from test_acceptance_happy import data_check
 
-@pytest.fixture
+from conftest import data_check
+
 def test_successful_prediction(client):
     """Test the successful image upload and prediction."""
     # Create a mock image file with minimal valid content

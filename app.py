@@ -2,8 +2,10 @@
 Website routes
 """
 
+from os import write
 from flask import Flask, render_template, request
 from model import preprocess_img, predict_result
+from PIL import UnidentifiedImageError
 
 # Instantiating flask app
 app = Flask(__name__)
@@ -27,6 +29,9 @@ def predict_image_file():
             return render_template("result.html", predictions=str(pred))
 
     except FileNotFoundError:
+        error = "File cannot be processed."
+        return render_template("result.html", err=error)
+    except UnidentifiedImageError:
         error = "File cannot be processed."
         return render_template("result.html", err=error)
     return render_template("result.html")

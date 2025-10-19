@@ -18,5 +18,3 @@ def test_empty_image():
 def test_index_endpoint():
     """Basic: Index route returns 200"""
     assert app.test_client().get('/').status_code == 200
-
-def test_
