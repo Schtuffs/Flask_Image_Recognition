@@ -25,7 +25,16 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install pytest
 
       - name: Run tests
         run: |
-          pytest test_model.py
+          pytest \
+          custom_tests.py \
+          conftest.py \
+          test_acceptance_edge_cases.py \ 
+          test_acceptance_happy.py \
+          test_acceptance_sad.py \
+          test_integration_happy.py \
+          test_integration_sad.py \
+          test_model.py
