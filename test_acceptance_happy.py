@@ -8,6 +8,7 @@ from io import BytesIO
 import pytest
 
 def data_check(client, img_data):
+    """Checks for multiple images"""
     response = client.post(
         "/prediction",
         data={"file": (img_data, img_data.name)},

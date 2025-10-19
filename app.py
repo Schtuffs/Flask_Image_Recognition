@@ -26,6 +26,9 @@ def predict_image_file():
             pred = predict_result(img)
             return render_template("result.html", predictions=str(pred))
 
+    except FileNotFoundError:
+        error = "File cannot be processed."
+        return render_template("result.html", err=error)
     except Exception:
         error = "File cannot be processed."
         return render_template("result.html", err=error)
