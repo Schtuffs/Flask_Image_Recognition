@@ -6,6 +6,7 @@ Integration tests
 
 from io import BytesIO
 import pytest
+from test_acceptance_happy import data_check
 
 @pytest.fixture
 def test_successful_prediction(client):
@@ -14,13 +15,4 @@ def test_successful_prediction(client):
     img_data = BytesIO(b"fake_image_data")
     img_data.name = "test.jpg"
 
-    # Simulate a file upload to the correct prediction endpoint
-    response = client.post(
-        "/prediction",  # Correct route for prediction
-        data={"file": (img_data, img_data.name)},
-        content_type="multipart/form-data"
-    )
-
-    # Assertions
-    assert response.status_code == 200
-    assert b"Prediction" in response.data  # Modify this check based on your output
+    data_check(client, img_data)

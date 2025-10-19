@@ -7,6 +7,16 @@ Acceptance tests
 from io import BytesIO
 import pytest
 
+def data_check(client, img_data):
+    response = client.post(
+        "/prediction",
+        data={"file": (img_data, img_data.name)},
+        content_type="multipart/form-data"
+    )
+
+    assert response.status_code == 200
+    assert b"Prediction" in response.data
+
 @pytest.fixture
 def test_acceptance_successful_upload(client):
     """
@@ -21,14 +31,7 @@ def test_acceptance_successful_upload(client):
     img_data = BytesIO(b"fake_image_data")  # Simulated valid image data
     img_data.name = "test_image.jpg"
 
-    response = client.post(
-        "/prediction",
-        data={"file": (img_data, img_data.name)},
-        content_type="multipart/form-data"
-    )
-
-    assert response.status_code == 200
-    assert b"Prediction" in response.data
+    data_check(client, img_data)
 
 @pytest.fixture
 def test_acceptance_valid_large_image(client):
@@ -45,14 +48,7 @@ def test_acceptance_valid_large_image(client):
     img_data = BytesIO(b"fake_large_image_data" * 1000)  # Simulating a large image
     img_data.name = "large_image.jpg"
 
-    response = client.post(
-        "/prediction",
-        data={"file": (img_data, img_data.name)},
-        content_type="multipart/form-data"
-    )
-
-    assert response.status_code == 200
-    assert b"Prediction" in response.data
+    data_check(client, img_data)
 
 @pytest.fixture
 def test_acceptance_valid_image_size_upload(client):
