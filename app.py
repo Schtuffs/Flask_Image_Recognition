@@ -1,4 +1,3 @@
-# Importing required libs
 from flask import Flask, render_template, request
 from model import preprocess_img, predict_result
 
@@ -24,6 +23,7 @@ def predict_image_file():
     except:
         error = "File cannot be processed."
         return render_template("result.html", err=error)
+    return render_template("result.html")
 
 
 # Driver code
