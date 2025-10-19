@@ -2,11 +2,10 @@
 Website routes
 """
 
-import sys
+from werkzeug.exceptions import BadRequestKeyError
 from PIL import UnidentifiedImageError
 from flask import Flask, render_template, request
 from model import preprocess_img, predict_result
-from werkzeug.exceptions import BadRequestKeyError
 
 # Instantiating flask app
 app = Flask(__name__)
