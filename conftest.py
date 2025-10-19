@@ -11,12 +11,13 @@ def client():
     with app.test_client() as clnt:
         yield clnt
 
-def data_check(client, img_data):
+def data_check(clnt, img_data):
     """Checks for multiple images"""
-    response = client.post(
+    response = clnt.post(
         "/prediction",
         data={"file": (img_data, img_data.name)},
         content_type="multipart/form-data"
     )
 
+    assert response.status_code == 200
     assert b"Prediction" in response.data

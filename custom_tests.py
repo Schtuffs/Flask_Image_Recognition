@@ -2,9 +2,9 @@
 These are the custom test cases for our assignment
 """
 
+from PIL import UnidentifiedImageError
 from app import app
 from model import preprocess_img
-from PIL import UnidentifiedImageError
 
 def test_empty_image():
     """Basic: This tests an empty image"""
@@ -14,7 +14,7 @@ def test_empty_image():
 
     except UnidentifiedImageError:
         assert True
-    
+
 def test_index_endpoint():
     """Basic: Index route returns 200"""
     assert app.test_client().get('/').status_code == 200
